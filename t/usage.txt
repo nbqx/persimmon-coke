@@ -1,0 +1,13 @@
+usage: persimmon-coke {options} xxx
+
+  stream-based persimmon and coke
+  
+  OPTIONS:
+
+  -n               given count
+  -u, --user       given user timeline
+  --stream         streaming
+  -h, --help       print this message
+                  
+
+  
