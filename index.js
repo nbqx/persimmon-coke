@@ -1,8 +1,7 @@
 #! /usr/bin/env node
 var fs = require('fs');
 var argv = require('yargs').argv;
-var cmd = require(__dirname+'/cmds'),
-    confirm = require(__dirname+'/lib/confirm');
+var cmd = require(__dirname+'/cmds');
 
 // TODO: 
 // cmd.show(id);
@@ -44,11 +43,9 @@ if(process.stdin.isTTY){
   // status update
   else if(argv._.length!==0){
     var txt = argv._.join(' ');
-    confirm("Status Update?: ["+txt+"]",txt,function(t){
-      cmd.update(t).on('error',function(err){
-        console.log(err);
-      });
-    });
+    cmd.update(txt).on('error',function(err){
+      console.log(err);
+    })
   }
 
   // help
