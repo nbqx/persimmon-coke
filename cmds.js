@@ -21,6 +21,9 @@ module.exports = {
   // Stream
   stream: function(){ return combine(authStream,stream(),output)},
 
+  // RawStream => output json for piping other program
+  raw_stream: function(){ return combine(authStream,stream()) },
+
   // updateStatus
   update: function(mes){ return combine(authStream,update(mes),output) },
 

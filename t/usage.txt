@@ -6,6 +6,7 @@ usage: persimmon-coke {options} xxx
 
   -n               given count
   -u, --user       given user timeline
+  --raw            output raw data
   --stream         streaming
   -h, --help       print this message
                   

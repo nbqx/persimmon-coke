@@ -4,6 +4,9 @@ var argv = require('yargs').argv;
 var cmd = require(__dirname+'/cmds');
 
 // TODO: 
+// cmd.update() with confirm
+
+// TODO: 
 // cmd.show(id);
 
 // TODO: 
@@ -21,16 +24,38 @@ if(process.stdin.isTTY){
   if(argv.u || argv.user){
     var user = argv.u || argv.user;
     if(typeof user === 'string'){
-      cmd.user(user,n);
+      cmd.user(user,n).on('error',function(err){
+        console.log(err);
+        process.exit(1);
+      });
     }else{
-      cmd.home(n);
+      cmd.home(n).on('error',function(err){
+        console.log(err);
+        process.exit(1);
+      });;
     }
   }
 
   // stream
   else if(argv.stream){
     title();
+
     cmd.stream().on('error',function(err){
+      console.log(err);
+      process.exit(1);
+    });
+
+    process.once('SIGINT',function(){
+      process.exit(0);
+    });
+  }
+
+  // raw-stream
+  else if(argv.raw){
+
+    cmd.raw_stream().on('data',function(data){
+      console.log(JSON.stringify(data));
+    }).on('error',function(err){
       console.log(err);
       process.exit(1);
     });
@@ -43,9 +68,16 @@ if(process.stdin.isTTY){
   // status update
   else if(argv._.length!==0){
     var txt = argv._.join(' ');
+
+    // TODO: with confirm
+    // var confirm = require(__dirname+'/lib/confirm');
+    // confirm('update? ',function(){
+    //   console.log('TODO!');
+    // });
+    
     cmd.update(txt).on('error',function(err){
       console.log(err);
-    })
+    });
   }
 
   // help
@@ -55,7 +87,7 @@ if(process.stdin.isTTY){
 
   // default
   else{
-    cmd.home(n);
+    fs.createReadStream(__dirname+'/t/usage.txt').pipe(process.stdout);
   }
 
 }else{
