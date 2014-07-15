@@ -13,13 +13,13 @@ var authStream = combine(init(),auth);
 
 module.exports = {
   // getHomeTimeline
-  home: function(n){ return combine(authStream,home({count:n}),output)  },
+  home: function(n,color){ return combine(authStream,home({count:n}),output(color))  },
   
   // getUserTimeline
-  user: function(name,n){ return combine(authStream,user({screen_name: name, count: n}),output) },
+  user: function(name,n,color){ return combine(authStream,user({screen_name: name, count: n}),output(color)) },
 
   // Stream
-  stream: function(){ return combine(authStream,stream(),output)},
+  stream: function(color){ return combine(authStream,stream(),output(color))},
 
   // RawStream => output json for piping other program
   raw_stream: function(){ return combine(authStream,stream()) },

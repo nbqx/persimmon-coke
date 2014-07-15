@@ -19,17 +19,18 @@ function title(){
 var n = 10;
 if(process.stdin.isTTY){
   if(argv.n) n = argv.n; 
+  var color = argv.nocolor || false;
 
   // home or user timeline
   if(argv.u || argv.user){
     var user = argv.u || argv.user;
     if(typeof user === 'string'){
-      cmd.user(user,n).on('error',function(err){
+      cmd.user(user,n,color).on('error',function(err){
         console.log(err);
         process.exit(1);
       });
     }else{
-      cmd.home(n).on('error',function(err){
+      cmd.home(n,color).on('error',function(err){
         console.log(err);
         process.exit(1);
       });
@@ -40,7 +41,7 @@ if(process.stdin.isTTY){
   else if(argv.stream){
     title();
 
-    cmd.stream().on('error',function(err){
+    cmd.stream(color).on('error',function(err){
       console.log(err);
       process.exit(1);
     });
@@ -87,7 +88,7 @@ if(process.stdin.isTTY){
 
   // default
   else{
-    cmd.home(n).on('error',function(err){
+    cmd.home(n,color).on('error',function(err){
       console.log(err);
       process.exit(1);
     });
