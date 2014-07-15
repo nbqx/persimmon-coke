@@ -32,7 +32,7 @@ if(process.stdin.isTTY){
       cmd.home(n).on('error',function(err){
         console.log(err);
         process.exit(1);
-      });;
+      });
     }
   }
 
@@ -87,7 +87,10 @@ if(process.stdin.isTTY){
 
   // default
   else{
-    fs.createReadStream(__dirname+'/t/usage.txt').pipe(process.stdout);
+    cmd.home(n).on('error',function(err){
+      console.log(err);
+      process.exit(1);
+    });
   }
 
 }else{
